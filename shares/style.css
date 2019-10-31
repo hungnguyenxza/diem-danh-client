@@ -1,0 +1,15 @@
+.container{
+  width: 90%;
+  margin: auto;
+  padding-top: 20px;
+}
+.content{
+}
+.active a, a.active{
+  pointer-events: none;
+}
+@media screen and (max-width:600px){
+  .container{
+    width:100%;
+  }
+}

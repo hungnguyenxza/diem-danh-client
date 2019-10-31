@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Điểm danh đi dạy</title>
+  <link rel="stylesheet" href="../vendors/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../vendors/css/all.min.css">
+  <link rel="stylesheet" href="../vendors/css/toastr.min.css">
+  <link rel="stylesheet" href="../shares/style.css">
+</head>
+<body>
+  <div class="menu-bar">
+  </div>
+  <div class="container">
+    <div class="content">
+      <div class="row mb-2">
+        <div class="col-6">
+          <p class="lead">Danh sách lớp</p>
+        </div>
+        <div class="col text-right">
+          <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#themLop">Thêm lớp</button>
+        </div>
+      </div>
+      <div>
+        <table class="table table-hover" id="danhSachLopHoc">
+          <thead>
+            <tr>
+              <th>STT</th>
+              <th>Id</th>
+              <th>Tên lớp</th>
+              <th>Giảng viên</th>
+              <th>Thời gian</th>
+            </tr>
+          </thead>
+          <tbody id="dataDSLopHoc"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="themLop" tabindex="-1" role="dialog" aria-labelledby="ethemLopLabel" aria-hidden="true">
+    <form id="themLopDay">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="themLopLabel">Thêm lớp dạy</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="txtIdLop">Id</label>
+              <input type="text" class="form-control" id="txtIdLop" aria-describedby="idHelp" name="txtIdLop" placeholder="Enter id">
+              <small id="idHelp" class="form-text text-muted">Cú pháp: Tên cơ sở-Loại lớp-Tên lớp</small>
+            </div>
+            <div class="form-group">
+              <label for="txtTenLop">Tên lớp</label>
+              <input type="text" name="txtTenLop" class="form-control" id="txtTenLop" placeholder="Tên lớp">
+            </div>
+            <div class="form-group">
+              <label for="txtGVLop">Giảng viên</label>
+              <input type="text" class="form-control" name="txtGVLop" id="txtGVLop" placeholder="Danh sách giảng viên">
+            </div>
+            <div class="form-group">
+              <label for="txtDateLop">Các buổi dạy trong tuần</label>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <script src="../vendors/js/jquery-3.4.1.min.js"></script>
+  <script src="../vendors/js/bootstrap.min.js"></script>
+  <script src="../vendors/js/toastr.min.js"></script>
+  <script src="../shares/menu-bar.js"></script>
+  <script src="../shares/script.js"></script>
+  <script src="danh-sach-lop.js"></script>
+  <script type="text/template" id="rowDanhSachLopHoc">
+    <tr>
+      <td>{stt}</td>
+      <td>{id}</td>
+      <td>{name}</td>
+      <td>{giangvien}</td>
+      <td>{thoigian}</td>
+    </tr>
+  </script>
+</body>
+</html>
