@@ -186,8 +186,8 @@ function displayTimeClass(timeClass) {
 
 function getActionDSLop(lopHoc) {
   let s = `
-    <button type="button" class="btn btn-sm btn-success" onclick="onEditLopHoc('${lopHoc.id}')">Edit</button>  
-    <button type="button" class="btn btn-sm btn-danger" onclick="onDeleteLopHoc('${lopHoc.id}')">Delete</button>  
+    <button type="button" class="btn btn-sm btn-success" onclick="onEditLopHoc('${lopHoc.id}')">Sửa</button>  
+    <button type="button" class="btn btn-sm btn-danger" onclick="onDeleteLopHoc('${lopHoc.id}')">Xóa</button>  
   `;
   return s;
 }

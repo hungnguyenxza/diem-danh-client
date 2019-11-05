@@ -10,7 +10,7 @@
 
 // await getMenuBarFile();
 
-var apiServer = "http://localhost:8080";
+var apiServer = "http://diem-danh-server.herokuapp.com";
 
 let utilities = (function (){
   return {
@@ -24,7 +24,8 @@ let utilities = (function (){
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: 'Okie, xóa đê!',
+      cancelButtonText: 'Oh, đừng!'
     })
   }
 })();
