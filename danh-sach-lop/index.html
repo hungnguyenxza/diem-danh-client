@@ -5,10 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Điểm danh đi dạy</title>
+  <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="../vendors/css/bootstrap.min.css">
   <link rel="stylesheet" href="../vendors/css/all.min.css">
   <link rel="stylesheet" href="../vendors/css/toastr.min.css">
+  <link rel="stylesheet" href="../vendors/css/bootstrap-datepicker3.min.css">
+  <link rel="stylesheet" href="../vendors/css/sweetalert2.min.css">
   <link rel="stylesheet" href="../shares/style.css">
+  <link rel="stylesheet" href="dach-sach-lop.css">
 </head>
 <body>
   <div class="menu-bar">
@@ -31,7 +35,10 @@
               <th>Id</th>
               <th>Tên lớp</th>
               <th>Giảng viên</th>
+              <th>Trợ giảng</th>
+              <th>Lịch dạy</th>
               <th>Thời gian</th>
+              <th></th>
             </tr>
           </thead>
           <tbody id="dataDSLopHoc"></tbody>
@@ -39,7 +46,7 @@
       </div>
     </div>
   </div>
-  <div class="modal fade" id="themLop" tabindex="-1" role="dialog" aria-labelledby="ethemLopLabel" aria-hidden="true">
+  <div class="modal fade" id="themLop" tabindex="-1" role="dialog" aria-labelledby="themLopLabel" aria-hidden="true">
     <form id="themLopDay">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -50,21 +57,182 @@
             </button>
           </div>
           <div class="modal-body">
-            <div class="form-group">
-              <label for="txtIdLop">Id</label>
-              <input type="text" class="form-control" id="txtIdLop" aria-describedby="idHelp" name="txtIdLop" placeholder="Enter id">
-              <small id="idHelp" class="form-text text-muted">Cú pháp: Tên cơ sở-Loại lớp-Tên lớp</small>
+            <div class="row">
+              <div class="col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label for="txtIdLop">Id</label>
+                  <input type="text" class="form-control" id="txtIdLop" aria-describedby="idHelp" name="txtIdLop" placeholder="Enter id">
+                  <small id="idHelp" class="form-text text-muted">Cú pháp: Tên cơ sở-Loại lớp-Tên lớp</small>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label for="txtTenLop">Tên lớp</label>
+                  <input type="text" name="txtTenLop" class="form-control" id="txtTenLop" placeholder="Tên lớp">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label for="txtGVLop">Giảng viên</label>
+                  <input type="text" class="form-control" name="txtGVLop" id="txtGVLop" placeholder="Giảng viên">
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label for="txtTGLop">Trợ giảng</label>
+                  <input type="text" class="form-control" name="txtTGLop" id="txtTGLop" placeholder="Trợ giảng">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label for="txtStartDateLop">Ngày bắt đầu</label>
+                  <input type="text" autocomplete="off" class="form-control date-picker" name="txtStartDateLop" id="txtStartDateLop" placeholder="Ngày bắt đầu">
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-6">
+                <div class="form-group">
+                  <label for="txtEndDateLop">Ngày kết thúc</label>
+                  <input type="text" autocomplete="off" class="form-control date-picker" name="txtEndDateLop" id="txtEndDateLop" placeholder="Ngày kết thúc">
+                </div>
+              </div>
             </div>
             <div class="form-group">
-              <label for="txtTenLop">Tên lớp</label>
-              <input type="text" name="txtTenLop" class="form-control" id="txtTenLop" placeholder="Tên lớp">
-            </div>
-            <div class="form-group">
-              <label for="txtGVLop">Giảng viên</label>
-              <input type="text" class="form-control" name="txtGVLop" id="txtGVLop" placeholder="Danh sách giảng viên">
-            </div>
-            <div class="form-group">
-              <label for="txtDateLop">Các buổi dạy trong tuần</label>
+              <label for="txtDateLop">Các buổi dạy trong tuần: <span class="text-monospace font-weight-bold" id="time-class"></span></label>
+              <div>
+                <table id="list-time-class" class="table table-borderless">
+                  <tr>
+                    <th></th>
+                    <th>CN</th>
+                    <th>2</th>
+                    <th>3</th>
+                    <th>4</th>
+                    <th>5</th>
+                    <th>6</th>
+                    <th>7</th>
+                  </tr>
+                  <tr>
+                    <th><span class="my-icon morning"></span></th>
+                    <td>
+                      <div class="time-circle">
+                        <input type="checkbox" name="CN_time" value="CN_S"/>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="time-circle">
+                        <input type="checkbox" name="2_time" value="2_S"/>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="time-circle">
+                        <input type="checkbox" name="3_time" value="3_S"/>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="time-circle">
+                        <input type="checkbox" name="4_time" value="4_S"/>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="time-circle">
+                        <input type="checkbox" name="5_time" value="5_S"/>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="time-circle">
+                        <input type="checkbox" name="6_time" value="6_S"/>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="time-circle">
+                        <input type="checkbox" name="7_time" value="7_S"/>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th><span class="my-icon launch"></span></th>
+                    <td>
+                      <div class="time-circle">
+                        <input type="checkbox" name="CN_time" value="CN_C"/>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="time-circle">
+                        <input type="checkbox" name="2_time" value="2_C"/>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="time-circle">
+                        <input type="checkbox" name="3_time" value="3_C"/>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="time-circle">
+                        <input type="checkbox" name="4_time" value="4_C"/>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="time-circle">
+                        <input type="checkbox" name="5_time" value="5_C"/>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="time-circle">
+                        <input type="checkbox" name="6_time" value="6_C"/>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="time-circle">
+                        <input type="checkbox" name="7_time" value="7_C"/>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th><span class="my-icon night"></span></th>
+                    <td>
+                      <div class="time-circle">
+                        <input type="checkbox" name="CN_time" value="CN_T"/>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="time-circle">
+                        <input type="checkbox" name="2_time" value="2_T"/>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="time-circle">
+                        <input type="checkbox" name="3_time" value="3_T"/>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="time-circle">
+                        <input type="checkbox" name="4_time" value="4_T"/>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="time-circle">
+                        <input type="checkbox" name="5_time" value="5_T"/>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="time-circle">
+                        <input type="checkbox" name="6_time" value="6_T"/>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="time-circle">
+                        <input type="checkbox" name="7_time" value="7_T"/>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+                <div class="text-right">
+                  <button type="button" class="btn btn-sm btn-link" onclick="clearAllTimes();">Clear all</button>
+                </div>
+              </div>
             </div>
           </div>
           <div class="modal-footer">
@@ -78,6 +246,8 @@
   <script src="../vendors/js/jquery-3.4.1.min.js"></script>
   <script src="../vendors/js/bootstrap.min.js"></script>
   <script src="../vendors/js/toastr.min.js"></script>
+  <script src="../vendors/js/bootstrap-datepicker.min.js"></script>
+  <script src="../vendors/js/sweetalert2.all.min.js"></script>
   <script src="../shares/menu-bar.js"></script>
   <script src="../shares/script.js"></script>
   <script src="danh-sach-lop.js"></script>
@@ -87,7 +257,10 @@
       <td>{id}</td>
       <td>{name}</td>
       <td>{giangvien}</td>
-      <td>{thoigian}</td>
+      <td>{trogiang}</td>
+      <td><span title="{lichday-title}">{lichday}<span></td>
+      <td>{periodtime}</td>
+      <td>{action}</td>
     </tr>
   </script>
 </body>

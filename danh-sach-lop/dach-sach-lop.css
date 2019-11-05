@@ -1,0 +1,74 @@
+#list-time-class{
+  margin-bottom: 0;
+}
+#list-time-class tr td input[type="checkbox"]{
+  display: none;
+}
+#list-time-class tr td{
+  width: 11%;
+}
+#list-time-class tr td::after {
+  box-shadow: inset 0 0 0 1px #c82647;
+}
+#list-time-class tr td::before {
+  background: #c82647;
+  box-shadow: inset 0 0 0 60px #2d2c3e;
+}
+#list-time-class tr td:hover::before {
+  box-shadow: inset 0 0 0 1px #2d2c3e;
+}
+#list-time-class tr th, #list-time-class tr td{
+  text-align: center;
+  vertical-align: middle;
+}
+/* 
+.time-circle:hover{
+  box-shadow: 1px 1px 5px #888888;
+} */
+
+.time-circle {
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+}
+.time-circle::before, .time-circle::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  transition: all 0.25s ease;
+  border-radius: 50%;
+}
+.time-circle::after {
+  box-shadow: inset 0 0 0 1px #5088c0;
+}
+.time-circle::before {
+  background: #54bbe7;
+  box-shadow: inset 0 0 0 50px #fff;
+}
+.time-circle.time-actived::before {
+  box-shadow: inset 0 0 0 1px #fff;
+}
+
+.my-icon{
+  height: 50px;
+  width: 50px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: inline-block;
+  vertical-align: middle;
+  text-rendering: auto;
+}
+.morning{
+  background-image: url('../images/morning.png');
+}
+.launch{
+  background-image: url('../images/launch.png');
+}
+.night{
+  background-image: url('../images/night.png');
+}
