@@ -6,6 +6,7 @@ let formDataToFieldClassMapping = Object.freeze({
   'txtTGLop': 'mentors',
   'txtStartDateLop': 'startDate',
   'txtEndDateLop': 'endDate',
+  'txtSalaryLop': 'salary',
 });
 
 let isEdit = false;
