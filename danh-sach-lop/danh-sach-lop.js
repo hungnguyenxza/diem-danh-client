@@ -1,4 +1,3 @@
-var Scrollbar = window.Scrollbar;
 let formDataToFieldClassMapping = Object.freeze({
   'txtIdLop': 'id',
   'txtTenLop': 'name',
@@ -244,8 +243,21 @@ function onDeleteLopHoc(lopHocId) {
   })
 }
 
+function preparaModal(lopHoc){
+  if(isEdit){
+    preparaForUpdate(lopHoc);
+  }else{
+    preparaForAdd();
+  }
+}
+
 function preparaForUpdate(lopHoc) {
   $('#themLopLabel').text('Thông tin lớp: ' + lopHoc.id);
+  $('#txtIdLop').prop('disabled', true);
+}
+function preparaForAdd(){
+  $('#themLopLabel').text('Thêm lớp mới');
+  $('#txtIdLop').prop('disabled', false);
 }
 
 function showScheduleClass(schedules) {
@@ -273,6 +285,7 @@ $(document).ready(function () {
       $('#themLopDay')[0].reset();
       clearAllTimes();
     }
+    preparaModal(currentLopHoc);
   });
   $('#themLop').on('hidden.bs.modal', function (e) {
     isEdit = false;
