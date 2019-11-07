@@ -60,23 +60,33 @@
             <div class="row">
               <div class="col-sm-12 col-md-6">
                 <div class="form-group">
-                  <label for="txtIdLop">Id</label>
-                  <input type="text" class="form-control" id="txtIdLop" aria-describedby="idHelp" name="txtIdLop" placeholder="Enter id">
+                  <label for="txtIdLop">Id<span class="text-danger">*</span></label>
+                  <input type="text" required class="form-control" 
+                  id="txtIdLop" aria-describedby="idHelp" 
+                  name="txtIdLop" placeholder="Nhập id"
+                  oninvalid="this.setCustomValidity('Cần nhập id')"
+                  oninput="setCustomValidity('')">
                   <small id="idHelp" class="form-text text-muted">Cú pháp: Tên cơ sở-Loại lớp-Tên lớp</small>
                 </div>
               </div>
               <div class="col-sm-12 col-md-6">
                 <div class="form-group">
-                  <label for="txtTenLop">Tên lớp</label>
-                  <input type="text" name="txtTenLop" class="form-control" id="txtTenLop" placeholder="Tên lớp">
+                  <label for="txtTenLop">Tên lớp<span class="text-danger">*</span></label>
+                  <input type="text" required name="txtTenLop" 
+                  class="form-control" id="txtTenLop" placeholder="Tên lớp"
+                  oninvalid="this.setCustomValidity('Cần nhập tên lớp')"
+                  oninput="setCustomValidity('')">
                 </div>
               </div>
             </div>
             <div class="row">
               <div class="col-sm-12 col-md-6">
                 <div class="form-group">
-                  <label for="txtGVLop">Giảng viên</label>
-                  <input type="text" class="form-control" name="txtGVLop" id="txtGVLop" placeholder="Giảng viên">
+                  <label for="txtGVLop">Giảng viên<span class="text-danger">*</span></label>
+                  <input type="text" required class="form-control" name="txtGVLop" 
+                  id="txtGVLop" placeholder="Giảng viên"
+                  oninvalid="this.setCustomValidity('Cần nhập giảng viên')"
+                  oninput="setCustomValidity('')">
                 </div>
               </div>
               <div class="col-sm-12 col-md-6">
@@ -89,8 +99,12 @@
             <div class="row">
               <div class="col-sm-12 col-md-6">
                 <div class="form-group">
-                  <label for="txtStartDateLop">Ngày bắt đầu</label>
-                  <input type="text" autocomplete="off" class="form-control date-picker" name="txtStartDateLop" id="txtStartDateLop" placeholder="Ngày bắt đầu">
+                  <label for="txtStartDateLop">Ngày bắt đầu<span class="text-danger">*</span></label>
+                  <input type="text" required autocomplete="off" 
+                  class="form-control date-picker" name="txtStartDateLop" 
+                  id="txtStartDateLop" placeholder="Ngày bắt đầu"
+                  oninvalid="this.setCustomValidity('Cần nhập ngày bắt đầu')"
+                  oninput="setCustomValidity('')">
                 </div>
               </div>
               <div class="col-sm-12 col-md-6">
@@ -103,14 +117,18 @@
             <div class="row">
               <div class="col-12">
                 <div class="form-group">
-                  <label for="txtSalaryLop">Lương</label>
-                  <input type="number" class="form-control" name="txtSalaryLop" id="txtSalaryLop" placeholder="Nhập lương (mặc định)"/>
+                  <label for="txtSalaryLop">Lương<span class="text-danger">*</span></label>
+                  <input type="number" required class="form-control" name="txtSalaryLop" 
+                  id="txtSalaryLop" placeholder="Nhập lương (mặc định)"
+                  oninvalid="this.setCustomValidity('Cần nhập lương')"
+                  oninput="setCustomValidity('')"/>
                   <small id="txtEndDateLopHelp" class="form-text text-muted">Mức lương mặc định sử dụng để điểm danh, thực tế có thể thay đổi</small>
                 </div>
               </div>
             </div>
             <div class="form-group">
-              <label for="txtDateLop">Các buổi dạy trong tuần: <span class="text-monospace font-weight-bold" id="time-class"></span></label>
+              <label for="txtDateLop">Các buổi dạy trong tuần<span class="text-danger">*</span>: 
+                <span class="text-monospace font-weight-bold" id="time-class"></span></label>
               <div>
                 <table id="list-time-class" class="table table-borderless">
                   <tr>

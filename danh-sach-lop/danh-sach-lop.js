@@ -16,8 +16,13 @@ generateMenuBar('.menu-bar', menuBarComponent.danhSachLop);
 $('form#themLopDay').submit(function (e) {
   e.preventDefault();
   let fields = $(this).serializeArray();
+  let schedule = getListTimeClass();
+  if(schedule.length === 0){
+    toastr.error("Cần chọn các buổi dạy trong tuần.");
+    return;
+  }
   if (!isEdit) {
-    let lopHoc = { date: [], schedule: getListTimeClass() };
+    let lopHoc = { date: [], schedule: schedule };
     $.each(fields, function (i, field) {
       if (formDataToFieldClassMapping.hasOwnProperty(field.name)) {
         lopHoc[formDataToFieldClassMapping[field.name]] = field.value;
@@ -51,7 +56,7 @@ $('form#themLopDay').submit(function (e) {
         currentLopHoc[formDataToFieldClassMapping[field.name]] = field.value;
       }
     });
-    currentLopHoc.schedule = getListTimeClass();
+    currentLopHoc.schedule = schedule;
     $.ajax({
       url: apiServer + '/update-lop-hoc',
       type: 'post',
