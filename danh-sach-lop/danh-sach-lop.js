@@ -17,7 +17,7 @@ $('form#themLopDay').submit(function (e) {
   e.preventDefault();
   let fields = $(this).serializeArray();
   let schedule = getListTimeClass();
-  if(schedule.length === 0){
+  if (schedule.length === 0) {
     toastr.error("Cần chọn các buổi dạy trong tuần.");
     return;
   }
@@ -89,6 +89,7 @@ function maxLengthData(value) {
 }
 
 function getAllDanhSachLop() {
+  loading.startFetching();
   $.ajax({
     url: apiServer + "/get-lop-hoc",
     type: 'get',
@@ -98,17 +99,20 @@ function getAllDanhSachLop() {
       $.each(data, function (i, lopHoc) {
         let r = $.trim($('#rowDanhSachLopHoc').html());
         r = r.replace(/{stt}/g, i + 1)
-          .replace(/{id}/g, lopHoc.id)
-          .replace(/{name}/g, lopHoc.name)
-          .replace(/{giangvien}/g, lopHoc.teachers)
-          .replace(/{trogiang}/g, lopHoc.mentors)
+          .replace(/{id}/g, lopHoc.ClassID)
+          .replace(/{name}/g, lopHoc.ClassName)
+          // .replace(/{giangvien}/g, lopHoc.teachers)
+          // .replace(/{trogiang}/g, lopHoc.mentors)
           .replace(/{lichday}/g, maxLengthData(getTextTimeClass(lopHoc.schedule)))
           .replace(/{lichday-title}/g, getTextTimeClass(lopHoc.schedule))
-          .replace(/{periodtime}/g, lopHoc.startDate + ' - ' + lopHoc.endDate)
+          .replace(/{periodtime}/g, moment(lopHoc.StartDate).format('DD/MM/YYYY') + ' - ' + moment(lopHoc.EndDate).format('DD/MM/YYYY'))
           .replace(/{action}/g, getActionDSLop(lopHoc))
           ;
         $('#dataDSLopHoc').append(r);
       });
+    },
+    complete: function () {
+      loading.stopFetching();
     }
   });
 }
@@ -198,6 +202,7 @@ function getActionDSLop(lopHoc) {
 }
 
 function onEditLopHoc(lopHocId) {
+  loading.startFetching();
   $.ajax({
     url: apiServer + '/get-lop-hoc-by-id',
     type: 'post',
@@ -218,6 +223,9 @@ function onEditLopHoc(lopHocId) {
     },
     error: function (err) {
 
+    },
+    complete: function () {
+      loading.stopFetching();
     }
   });
 }
@@ -230,8 +238,8 @@ function onDeleteLopHoc(lopHocId) {
         type: 'post',
         dataType: 'json',
         data: { id: lopHocId },
-        success: function (data){
-          if(data){
+        success: function (data) {
+          if (data) {
             if (data.isSuccess) {
               toastr.success(data.message);
               $('#themLop').modal('hide');
@@ -248,10 +256,10 @@ function onDeleteLopHoc(lopHocId) {
   })
 }
 
-function preparaModal(lopHoc){
-  if(isEdit){
+function preparaModal(lopHoc) {
+  if (isEdit) {
     preparaForUpdate(lopHoc);
-  }else{
+  } else {
     preparaForAdd();
   }
 }
@@ -260,7 +268,7 @@ function preparaForUpdate(lopHoc) {
   $('#themLopLabel').text('Thông tin lớp: ' + lopHoc.id);
   $('#txtIdLop').prop('disabled', true);
 }
-function preparaForAdd(){
+function preparaForAdd() {
   $('#themLopLabel').text('Thêm lớp mới');
   $('#txtIdLop').prop('disabled', false);
 }
@@ -279,12 +287,6 @@ function showScheduleClass(schedules) {
 }
 
 $(document).ready(function () {
-  $('.date-picker').datepicker({
-    format: "dd/mm/yyyy",
-    todayBtn: "linked",
-    todayHighlight: true,
-    autoclose: true,
-  });
   $('#themLop').on('shown.bs.modal', function (e) {
     if (!isEdit) {
       $('#themLopDay')[0].reset();

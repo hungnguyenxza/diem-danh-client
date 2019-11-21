@@ -1,7 +1,8 @@
 let menuBarComponent = Object.freeze({
   'diemDanh': 'diem-danh',
   'danhSachLop': 'danh-sach-lop',
-  'thongKe': 'thong-ke'
+  'thongKe': 'thong-ke',
+  'giangVien': 'giang-vien'
 });
 
 function generateMenuBar(target, active){

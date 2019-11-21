@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Giảng viên</title>
+  <link rel="stylesheet" href="../vendors/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../vendors/css/all.min.css">
+  <link rel="stylesheet" href="../vendors/css/bootstrap-datepicker3.min.css">
+  <link rel="stylesheet" href="../vendors/css/toastr.min.css">
+  <link rel="stylesheet" href="../vendors/css/sweetalert2.min.css">
+  <link rel="stylesheet" href="../shares/style.css">
+</head>
+<body>
+  <div class="menu-bar">
+  </div>
+  <div class="container">
+    <div class="content">
+      <div class="row mb-2">
+        <div class="col-6">
+          <p class="lead">Giảng viên</p>
+        </div>
+        <div class="col text-right">
+          <button class="btn btn-sm btn-primary" onclick="addNewLecture();">Thêm</button>
+        </div>
+      </div>
+      <div>
+        <table class="table table-hover" id="listLectures">
+          <thead>
+              <tr>
+                <th>STT</th>
+                <th>Tên</th>
+                <th>Sđt</th>
+                <th>Ngày sinh</th>
+                <th>Ngày tham gia</th>
+                <th>Role</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="dataListLectures"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="addLecture" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <form id="frmAddLecture">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Thêm giảng viên</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group row">
+              <label for="txtName" class="col-sm-3 col-form-label">Tên<span class="text-danger">*</span></label>
+              <div class="col-sm">
+                <input type="text" class="form-control" name="txtName" id="txtName" placeholder="Nhập tên giảng viên">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="txtPhone" class="col-sm-3 col-form-label">Sđt</label>
+              <div class="col-sm">
+                <input type="text" class="form-control" name="txtPhone" id="txtPhone" placeholder="Nhập sđt">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="txtEmail" class="col-sm-3 col-form-label">Email</label>
+              <div class="col-sm">
+                <input type="text" class="form-control" name="txtEmail" id="txtEmail" placeholder="Nhập email">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="txtBirth" class="col-sm-3 col-form-label">Ngày sinh</label>
+              <div class="col-sm">
+                <input type="text" autocomplete="off" class="form-control date-picker" name="txtBirth" id="txtBirth" placeholder="Nhập ngày sinh">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="txtJoinAt" class="col-sm-3 col-form-label">Ngày tham gia</label>
+              <div class="col-sm">
+                <input type="text" autocomplete="off" class="form-control date-picker" name="txtJoinAt" id="txtJoinAt" placeholder="Ngày tham gia">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="txtRole" class="col-sm-3 col-form-label">Role</label>
+              <div class="col-sm">
+                <select class="form-control" id="txtRole">
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="txtDescription" class="col-sm-3 col-form-label">Note</label>
+              <div class="col-sm">
+                <textarea class="form-control" name="txtDescription" id="txtDescription"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy bỏ</button>
+            <button type="submit" class="btn btn-primary">Lưu lại</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="editLecture" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <form id="frmEditLecture">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Sửa giảng viên</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" class="form-control" name="txtId" id="txtId">
+            <div class="form-group row">
+              <label for="txtName" class="col-sm-3 col-form-label">Tên<span class="text-danger">*</span></label>
+              <div class="col-sm">
+                <input type="text" class="form-control" name="txtName" id="txtName" placeholder="Nhập tên giảng viên">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="txtPhone" class="col-sm-3 col-form-label">Sđt</label>
+              <div class="col-sm">
+                <input type="text" class="form-control" name="txtPhone" id="txtPhone" placeholder="Nhập sđt">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="txtEmail" class="col-sm-3 col-form-label">Email</label>
+              <div class="col-sm">
+                <input type="text" class="form-control" name="txtEmail" id="txtEmail" placeholder="Nhập email">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="txtBirth" class="col-sm-3 col-form-label">Ngày sinh</label>
+              <div class="col-sm">
+                <input type="text" autocomplete="off" class="form-control date-picker" name="txtBirth" id="txtBirth" placeholder="Nhập ngày sinh">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="txtJoinAt" class="col-sm-3 col-form-label">Ngày tham gia</label>
+              <div class="col-sm">
+                <input type="text" autocomplete="off" class="form-control date-picker" name="txtJoinAt" id="txtJoinAt" placeholder="Ngày tham gia">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="txtRole" class="col-sm-3 col-form-label">Role</label>
+              <div class="col-sm">
+                <select class="form-control" id="txtRole">
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="txtDescription" class="col-sm-3 col-form-label">Note</label>
+              <div class="col-sm">
+                <textarea class="form-control" name="txtDescription" id="txtDescription"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy bỏ</button>
+            <button type="submit" class="btn btn-primary">Lưu lại</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script src="../vendors/js/jquery-3.4.1.min.js"></script>
+  <script src="../vendors/js/bootstrap.min.js"></script>
+  <script src="../vendors/js/toastr.min.js"></script>
+  <script src="../vendors/js/moment.min.js"></script>
+  <script src="../vendors/js/bootstrap-datepicker.min.js"></script>
+  <script src="../vendors/js/sweetalert2.all.min.js"></script>
+  <script src="../shares/menu-bar.js"></script>
+  <script src="../shares/script.js"></script>
+  <script src="giang-vien.js"></script>
+  <script type="text/template" id="rowListLecture">
+    <tr>
+      <td>{stt}</td>
+      <td>{name}</td>
+      <td>{phone}</td>
+      <td>{email}</td>
+      <td>{joinAt}</td>
+      <td>{role}</td>
+      <td>{action}</td>
+    </tr>
+  </script>
+</body>
+</html>

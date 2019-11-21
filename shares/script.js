@@ -30,3 +30,19 @@ let utilities = (function (){
   }
 })();
 
+$('body').prepend('<div class="loader-container" style="display:none"><div class="sbl-circ-ripple"></div></div>');
+
+let loading = (function(){
+  return {
+    startFetching: start,
+    stopFetching: stop,
+  };
+  function start(){
+    $('.loader-container').show();
+  }
+  function stop(){
+    $('.loader-container').hide();
+  }
+})();
+
+
