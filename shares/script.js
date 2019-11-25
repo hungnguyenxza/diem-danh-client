@@ -11,6 +11,7 @@
 // await getMenuBarFile();
 
 var apiServer = "http://diem-danh-server.herokuapp.com";
+// var apiServer = "http://localhost:8080";
 
 let utilities = (function (){
   return {

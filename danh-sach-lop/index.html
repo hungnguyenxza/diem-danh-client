@@ -83,16 +83,18 @@
               <div class="col-sm-12 col-md-6">
                 <div class="form-group">
                   <label for="txtGVLop">Giảng viên<span class="text-danger">*</span></label>
-                  <input type="text" required class="form-control" name="txtGVLop" 
-                  id="txtGVLop" placeholder="Giảng viên"
+                  <select class="form-control" id="txtGVLop" required 
                   oninvalid="this.setCustomValidity('Cần nhập giảng viên')"
                   oninput="setCustomValidity('')">
+                  </select>
                 </div>
               </div>
               <div class="col-sm-12 col-md-6">
                 <div class="form-group">
                   <label for="txtTGLop">Trợ giảng</label>
-                  <input type="text" class="form-control" name="txtTGLop" id="txtTGLop" placeholder="Trợ giảng">
+                  <select class="form-control" id="txtTGLop">
+                    <option value="0">None</option>
+                  </select>
                 </div>
               </div>
             </div>
@@ -128,7 +130,13 @@
             </div>
             <div class="form-group">
               <label for="txtDateLop">Các buổi dạy trong tuần<span class="text-danger">*</span>: 
-                <span class="text-monospace font-weight-bold" id="time-class"></span></label>
+                <span class="text-monospace font-weight-bold" id="time-class"></span>
+              </label>
+              <div>
+                <select multiple class="form-control" id="txtDayOfWeek">
+                  
+                </select>
+              </div>
               <div>
                 <table id="list-time-class" class="table table-borderless">
                   <tr>

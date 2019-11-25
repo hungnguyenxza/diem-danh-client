@@ -1,8 +1,6 @@
 let formDataToFieldClassMapping = Object.freeze({
   'txtIdLop': 'id',
   'txtTenLop': 'name',
-  'txtGVLop': 'teachers',
-  'txtTGLop': 'mentors',
   'txtStartDateLop': 'startDate',
   'txtEndDateLop': 'endDate',
   'txtSalaryLop': 'salary',
@@ -16,7 +14,7 @@ generateMenuBar('.menu-bar', menuBarComponent.danhSachLop);
 $('form#themLopDay').submit(function (e) {
   e.preventDefault();
   let fields = $(this).serializeArray();
-  let schedule = getListTimeClass();
+  let schedule = $(this).find('#txtDayOfWeek').val();
   if (schedule.length === 0) {
     toastr.error("Cần chọn các buổi dạy trong tuần.");
     return;
@@ -286,6 +284,46 @@ function showScheduleClass(schedules) {
   })
 }
 
+async function getAllLectures() {
+  try {
+    loading.startFetching();
+    let res = await fetch(apiServer + "/get-lectures");
+    let data = await res.json();
+    $.each(data, function (i, lecture) {
+      $('form#themLopDay #txtGVLop').append(`<option value="${lecture.LectureID}">${lecture.Name} - ${lecture.Phone} - ${lecture.Email} - ${lecture.RoleName}</option>`);
+      $('form#themLopDay #txtTGLop').append(`<option value="${lecture.LectureID}">${lecture.Name} - ${lecture.Phone} - ${lecture.Email} - ${lecture.RoleName}</option>`);
+    });
+  } catch (err) {
+    console.log(err);
+  }
+  loading.stopFetching();
+}
+
+async function getAllSchedules() {
+  try {
+    loading.startFetching();
+    let res = await fetch(apiServer + "/get-all-schedules");
+    let data = await res.json();
+    $.each(data, function (i, schedule) {
+      $('form#themLopDay #txtDayOfWeek').append(`<option value="${schedule.ScheduleID}">${formatTime(schedule.StartTime)} - ${formatTime(schedule.EndTime)} - ${getDayOfWeekString(schedule.DayOfWeek)}</option>`)
+    });
+  } catch (err) {
+    console.log(err);
+  }
+  loading.stopFetching();
+}
+getAllSchedules();
+
+function getDayOfWeekString(value) {
+  let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thurday', 'Friday', 'Saturday'];
+  return days[value] || days[0];
+}
+function formatTime(time) {
+  return moment(new Date('2019-11-11 ' + time)).format('HH:mm');
+}
+
+getAllLectures();
+
 $(document).ready(function () {
   $('#themLop').on('shown.bs.modal', function (e) {
     if (!isEdit) {
@@ -297,5 +335,11 @@ $(document).ready(function () {
   $('#themLop').on('hidden.bs.modal', function (e) {
     isEdit = false;
     currentLopHoc = undefined;
+  });
+  $('.date-picker').datepicker({
+    format: "dd/mm/yyyy",
+    todayBtn: "linked",
+    todayHighlight: true,
+    autoclose: true,
   });
 });
